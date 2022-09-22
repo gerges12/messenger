@@ -59,7 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/conversation/**")
                 .permitAll()
-            
+                .antMatchers("/block/**")
+                .permitAll()
                 
                 
                 .anyRequest()

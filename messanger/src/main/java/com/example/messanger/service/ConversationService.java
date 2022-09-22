@@ -27,10 +27,14 @@ public class ConversationService {
 	
 	@Autowired
 	MessageRepository messageRepository  ;
+	
+ 	 @Autowired
+     BlockService    blockService  ;
 
 	public void save(ConversationRequest conversationRequest) {
 		
 
+		
 		User other = userRepository.findById(conversationRequest.getReciever())
 		         .orElseThrow(  
        () -> new MassangereException("user not found") ) ;
@@ -39,6 +43,11 @@ public class ConversationService {
 		if (other == current) {
 			throw new MassangereException("you cannot send to youyrself") ;
 		}
+		
+		if (blockService.isBlock(other)) {
+			throw new MassangereException("you are block this user") ;
+
+		} ;
 		
 		Conversation  conversation_as_Sender = conversationRepository.findByReceiverAndSender(other, current) ;
 		Conversation  conversation_as_reciever = conversationRepository.findByReceiverAndSender(current, other) ;
