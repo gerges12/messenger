@@ -10,6 +10,7 @@ import com.example.messanger.dto.ConversationRequest;
 import com.example.messanger.entity.Conversation;
 import com.example.messanger.entity.Message;
 import com.example.messanger.entity.User;
+import com.example.messanger.exceptions.BlockedUserException;
 import com.example.messanger.exceptions.BlockedWordsException;
 import com.example.messanger.exceptions.MassangereException;
 
@@ -47,7 +48,7 @@ public class ConversationService {
 		}
 		
 		if (blockService.isBlock(other)) {
-			throw new MassangereException("you are block this user") ;
+			throw new BlockedUserException("you are block " + other.getUsername()) ;
 
 		} ;
 		
