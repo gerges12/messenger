@@ -10,6 +10,7 @@ import com.example.messanger.dto.ConversationRequest;
 import com.example.messanger.entity.Conversation;
 import com.example.messanger.entity.Message;
 import com.example.messanger.entity.User;
+import com.example.messanger.exceptions.BlockedWordsException;
 import com.example.messanger.exceptions.MassangereException;
 
 @Service
@@ -54,7 +55,7 @@ public class ConversationService {
 		
 		if (  blockWord != null ) {
 			
-			throw new MassangereException("you entered " + blockWord + " which is against our politics") ;
+			throw new BlockedWordsException("you entered " + blockWord + " which is against our politics") ;
 
 		}
 		
