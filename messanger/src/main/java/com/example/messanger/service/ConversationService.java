@@ -34,7 +34,8 @@ public class ConversationService {
 	public void save(ConversationRequest conversationRequest) {
 		
 
-		
+		String[] Block_words = {"bich", "fuck" , "porn"};
+
 		User other = userRepository.findById(conversationRequest.getReciever())
 		         .orElseThrow(  
        () -> new MassangereException("user not found") ) ;
@@ -48,6 +49,14 @@ public class ConversationService {
 			throw new MassangereException("you are block this user") ;
 
 		} ;
+		
+		String blockWord =  containsWords(conversationRequest.getMessage() , Block_words ) ;
+		
+		if (  blockWord != null ) {
+			
+			throw new MassangereException("you entered " + blockWord + " which is against our politics") ;
+
+		}
 		
 		Conversation  conversation_as_Sender = conversationRepository.findByReceiverAndSender(other, current) ;
 		Conversation  conversation_as_reciever = conversationRepository.findByReceiverAndSender(current, other) ;
@@ -128,6 +137,16 @@ public class ConversationService {
 	}
 
 
+	public static String containsWords(String inputString, String[] items) {
+	    String blockWord  =  null;
+	    for (String item : items) {
+	        if (inputString.contains(item)) {
+	        	blockWord = item;
+	            break;
+	        }
+	    }
+	    return blockWord;
+	}
 	
 	
 
